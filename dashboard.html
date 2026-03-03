@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勤怠システム - ダッシュボード</title>
+    <meta name="description" content="勤怠管理システム - ダッシュボード画面">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="attendance-page">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <img src="assets/logo.svg" alt="Logo" class="logo">
+                <div class="nav-menu-wrapper">
+                    <span class="grid-icon" onclick="toggleNavMenu()">⠿</span>
+                    <div class="nav-popover" id="navPopover">
+                        <span class="nav-popover-close" onclick="closeNavMenu()">✕</span>
+                        <button class="btn btn-display" onclick="goToTop()">トップ</button>
+                    </div>
+                </div>
+                <div class="group-info">
+                    <div class="label">打刻グループ</div>
+                    <div id="headerGroupName">さぬき営繕・医務</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="admin-link" onclick="goToAdmin()">管理者画面</span>
+                <span class="user-name" id="headerUserName">テスト 太郎</span>
+                <button class="btn-logout" onclick="handleLogout()">ログアウト</button>
+            </div>
+        </header>
+
+        <!-- Status Bar -->
+        <div class="status-bar off" id="statusBar">勤務外</div>
+
+        <!-- Main Content -->
+        <div class="dashboard-main">
+            <!-- Left Side -->
+            <div class="dashboard-left">
+                <!-- Clock -->
+                <div class="clock-display" style="margin: 30px 0;">
+                    <div class="date" id="currentDate">2026年2月20日(金)</div>
+                    <div class="time" id="currentTime">12:06:36</div>
+                </div>
+
+                <!-- Schedule Info -->
+                <div style="margin-top: 30px;">
+                    <div class="info-row">
+                        <span class="info-label">スケジュール</span>
+                        <div class="info-value">
+                            <input type="text" id="scheduleStart" readonly>
+                            <span>～</span>
+                            <input type="text" id="scheduleEnd" readonly>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">実績</span>
+                        <div class="info-value">
+                            <input type="text" id="actualStart" readonly>
+                            <span>～</span>
+                            <input type="text" id="actualEnd" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 残数 -->
+                <div class="section-label" style="margin-top: 30px;">残数</div>
+                <div id="remainingInfo" style="padding-left: 10px;">
+                    <!-- 残数情報がここに表示される -->
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="dashboard-right">
+                <button class="btn btn-pink" onclick="goToAttendance()">打刻修正申請</button>
+                <button class="btn btn-pink" onclick="goToAttendance()">残業申請</button>
+                <button class="btn btn-pink" onclick="goToAttendance()">休日出勤申請</button>
+
+                <div style="margin-top: 30px;">
+                    <button class="btn btn-pink" onclick="goToRequestList()">申請一覧</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 打刻修正申請モーダル -->
+        <div class="modal-overlay" id="modalCorrection">
+            <div class="modal">
+                <div class="modal-title">打刻修正申請</div>
+                <div class="form-group">
+                    <label>対象日</label>
+                    <input type="date" class="form-input" id="correctionDate">
+                </div>
+                <div class="form-group">
+                    <label>修正後の出勤時刻</label>
+                    <input type="time" class="form-input" id="correctionClockIn">
+                </div>
+                <div class="form-group">
+                    <label>修正後の退勤時刻</label>
+                    <input type="time" class="form-input" id="correctionClockOut">
+                </div>
+                <div class="form-group">
+                    <label>理由</label>
+                    <textarea class="form-input" id="correctionReason" rows="3" placeholder="修正理由を入力してください"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-cancel" onclick="closeModal('correction')">キャンセル</button>
+                    <button class="btn btn-submit" onclick="submitCorrection()">申請</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 残業申請モーダル -->
+        <div class="modal-overlay" id="modalOvertime">
+            <div class="modal">
+                <div class="modal-title">残業申請</div>
+                <div class="form-group">
+                    <label>対象日</label>
+                    <input type="date" class="form-input" id="overtimeDate">
+                </div>
+                <div class="form-group">
+                    <label>予定残業時間</label>
+                    <input type="time" class="form-input" id="overtimeHours">
+                </div>
+                <div class="form-group">
+                    <label>理由</label>
+                    <textarea class="form-input" id="overtimeReason" rows="3" placeholder="残業理由を入力してください"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-cancel" onclick="closeModal('overtime')">キャンセル</button>
+                    <button class="btn btn-submit" onclick="submitOvertime()">申請</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 休日出勤申請モーダル -->
+        <div class="modal-overlay" id="modalHoliday">
+            <div class="modal">
+                <div class="modal-title">休日出勤申請</div>
+                <div class="form-group">
+                    <label>対象日</label>
+                    <input type="date" class="form-input" id="holidayDate">
+                </div>
+                <div class="form-group">
+                    <label>予定勤務時間</label>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="time" class="form-input" id="holidayStart" style="flex:1">
+                        <span>～</span>
+                        <input type="time" class="form-input" id="holidayEnd" style="flex:1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>理由</label>
+                    <textarea class="form-input" id="holidayReason" rows="3" placeholder="休日出勤の理由を入力してください"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-cancel" onclick="closeModal('holiday')">キャンセル</button>
+                    <button class="btn btn-submit" onclick="submitHoliday()">申請</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>

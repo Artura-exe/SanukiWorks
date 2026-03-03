@@ -1,1 +1,93 @@
-# SanukiWorks
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>勤怠システム - 打刻・ログイン</title>
+  <meta name="description" content="勤怠管理システム - 打刻・ログイン画面">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="login-page">
+    <!-- Logo & Mode Toggles -->
+    <div style="padding: 12px 20px; display: flex; justify-content: space-between; align-items: center;">
+      <img src="assets/logo.svg" alt="Logo" style="width: 36px; height: 36px;">
+      <div class="mode-toggles">
+        <button class="btn btn-tablet-mode" id="btnTabletMode" onclick="toggleTabletMode()">
+          <span class="icon">📱</span>
+          <span>タブレットモード</span>
+        </button>
+        <button class="btn btn-pc-mode" id="btnPcMode" onclick="switchToPcMode()" style="display: none;">
+          <span class="icon">💻</span>
+          <span>PCモード</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="login-container">
+      <div class="login-content">
+        <!-- Left: Clock Display -->
+        <div class="login-left">
+          <div class="clock-display">
+            <div class="date" id="currentDate">2026年2月20日(金)</div>
+            <div class="time" id="currentTime">12:05:41</div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="login-right">
+          <!-- 打刻グループ -->
+          <div class="form-group">
+            <label>打刻グループ</label>
+            <input type="text" class="form-input" id="clockGroup" placeholder="">
+          </div>
+
+          <!-- 社員番号 -->
+          <div class="form-group">
+            <input type="text" class="form-input" id="employeeId" placeholder=""
+              style="text-align: center; font-size: 1.1rem;">
+          </div>
+
+          <!-- 出勤・退勤ボタン -->
+          <div class="clock-buttons">
+            <button class="btn btn-pink" id="btnClockIn" onclick="handleClockIn()">出勤</button>
+            <button class="btn btn-pink" id="btnClockOut" onclick="handleClockOut()"
+              style="background-color: #d5d5d5;">退勤</button>
+          </div>
+
+          <!-- コメント -->
+          <div class="form-group">
+            <label>コメント</label>
+            <input type="text" class="form-input" id="clockComment" placeholder="打刻コメント">
+          </div>
+
+          <!-- パスワード -->
+          <div class="form-group">
+            <label>パスワード</label>
+            <input type="password" class="form-input" id="password">
+          </div>
+
+          <!-- ログインボタン -->
+          <button class="btn btn-login" id="btnLogin" onclick="handleLogin()">login</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Line -->
+    <div class="login-footer"></div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/app.js"></script>
+  <script src="js/clock.js"></script>
+</body>
+
+</html>

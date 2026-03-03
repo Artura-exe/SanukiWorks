@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勤怠システム - 申請一覧</title>
+    <meta name="description" content="勤怠管理システム - 申請一覧画面">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="attendance-page">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <img src="assets/logo.svg" alt="Logo" class="logo">
+                <div class="nav-menu-wrapper">
+                    <span class="grid-icon" onclick="toggleNavMenu()">⠿</span>
+                    <div class="nav-popover" id="navPopover">
+                        <span class="nav-popover-close" onclick="closeNavMenu()">✕</span>
+                        <button class="btn btn-display" onclick="goToTop()">トップ</button>
+                    </div>
+                </div>
+                <div class="group-info">
+                    <span>表示月</span>
+                </div>
+                <div class="attendance-toolbar">
+                    <div class="month-selector">
+                        <label class="month-label">申請種別</label>
+                        <select class="form-input" id="requestTypeFilter"
+                            style="width: auto; padding: 6px 10px; font-size: 0.85rem;">
+                            <option value="">すべて</option>
+                            <option value="打刻修正申請">打刻修正申請</option>
+                            <option value="残業申請">残業申請</option>
+                            <option value="休日出勤申請">休日出勤申請</option>
+                        </select>
+                    </div>
+                    <div class="month-selector">
+                        <label class="month-label">対象期間</label>
+                        <input type="month" id="requestMonthFilter"
+                            style="padding: 6px 10px; border: 1px solid var(--primary-blue); border-radius: var(--radius); font-size: 0.85rem;">
+                    </div>
+                    <button class="btn btn-display" onclick="loadRequestList()">表示</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="admin-link" onclick="goToAdmin()">管理者画面</span>
+                <span class="user-name" id="headerUserName">テスト 太郎</span>
+            </div>
+        </header>
+
+        <!-- Request List Table -->
+        <div class="attendance-table-wrapper" style="padding-top: 10px;">
+            <table class="attendance-table" id="requestTable">
+                <thead>
+                    <tr>
+                        <th>打刻グループ</th>
+                        <th>申請日</th>
+                        <th>該当日</th>
+                        <th>申請区分</th>
+                        <th>開始時刻</th>
+                        <th>終了時刻</th>
+                        <th>理由</th>
+                        <th>申請承認FLG</th>
+                        <th>承認否認者</th>
+                        <th>承認否認日</th>
+                    </tr>
+                </thead>
+                <tbody id="requestBody">
+                    <!-- JSで動的に生成 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="js/app.js"></script>
+    <script src="js/request-list.js"></script>
+</body>
+
+</html>

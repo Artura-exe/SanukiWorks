@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勤怠システム - メンバー選択</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .working-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background-color: #fff;
+            border: 2px solid #a00;
+            color: #a00;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body class="tablet-mode">
+    <header class="header"
+        style="justify-content: space-between; border-bottom: none; align-items: flex-start; padding: 20px;">
+        <!-- Left: Clock & Back -->
+        <div class="header-left" style="display: flex; flex-direction: column; align-items: flex-start; gap: 15px;">
+            <div id="tabletClock" style="text-align: left;">
+                <div id="tabletDate" style="font-size: 2.2rem; font-weight: bold; color: #333;">2026年3月2日(月)</div>
+                <div id="tabletTime" style="font-size: 3.5rem; font-weight: bold; color: #333; line-height: 1;">17:15:44
+                </div>
+            </div>
+            <div class="back-to-selection" onclick="window.location.href='tablet-selection.html'"
+                style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: #f8c9d9; font-weight: bold; font-size: 1.2rem;">
+                <div
+                    style="width: 0; height: 0; border-top: 15px solid transparent; border-bottom: 15px solid transparent; border-right: 22px solid #f8c9d9;">
+                </div>
+                <span>拠点選択</span>
+            </div>
+        </div>
+
+        <!-- Right: Group & PC Mode -->
+        <div class="header-right" style="gap: 24px; align-items: center;">
+            <div style="font-size: 0.9rem; font-weight: bold; color: #555;">打刻グループ選択</div>
+            <div id="selectedGroupName"
+                style="padding: 12px 40px; border: 1px solid #ddd; background: #fff; font-size: 1.2rem; font-weight: bold;">
+                さぬき</div>
+            <button class="btn btn-pc-mode" onclick="switchToPcModeSelection()">
+                <span class="icon">💻</span>
+                <span>PCモード</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="tablet-selection-page" style="align-items: flex-start; padding-top: 20px;">
+        <div class="selection-grid" id="memberGrid"
+            style="grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px;">
+            <!-- JSで生成 -->
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/tablet-selection.js"></script>
+    <script src="js/tablet-member-selection.js"></script>
+</body>
+
+</html>

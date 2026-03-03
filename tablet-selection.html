@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勤怠システム - タブレット拠点選択</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="tablet-mode">
+    <div
+        style="padding: 12px 20px; display: flex; justify-content: flex-end; align-items: center; background-color: #fff; position: sticky; top: 0; z-index: 100;">
+        <button class="btn btn-pc-mode" id="btnPcMode" onclick="switchToPcModeSelection()">
+            <span class="icon">💻</span>
+            <span>PCモード</span>
+        </button>
+    </div>
+    <div class="tablet-selection-page" style="min-height: calc(100vh - 60px);">
+        <div class="speech-bubble-container">
+            <img src="assets/bird_icon.png" class="bird-icon" alt="Bird">
+            <div class="speech-bubble">
+                拠点を選択してください
+            </div>
+        </div>
+
+        <div class="selection-grid">
+            <!-- さぬき -->
+            <div class="selection-item" onclick="selectGroup('さぬき')">
+                <div class="selection-box" style="background-color: #f8c9d9;">さぬき</div>
+                <img src="assets/facility_sanuki.jpg" alt="さぬき" class="selection-image"
+                    onerror="this.src='https://via.placeholder.com/200x120?text=%E3%81%95%E3%81%AC%E3%81%8D'">
+            </div>
+
+            <!-- 玉藻荘 -->
+            <div class="selection-item" onclick="selectGroup('玉藻荘')">
+                <div class="selection-box" style="background-color: #ffcd94;">玉藻荘</div>
+                <img src="assets/facility_tamamoso.jpg" alt="玉藻荘" class="selection-image"
+                    onerror="this.src='https://via.placeholder.com/200x120?text=%E7%8E%89%E8%97%BB%E8%8D%98'">
+            </div>
+
+            <!-- さぬきの森 -->
+            <div class="selection-item" onclick="selectGroup('さぬきの森')">
+                <div class="selection-box" style="background-color: #addb8a;">さぬきの森</div>
+                <img src="assets/facility_mori.png" alt="さぬきの森" class="selection-image">
+            </div>
+
+            <!-- 新番丁 -->
+            <div class="selection-item" onclick="selectGroup('新番丁')">
+                <div class="selection-box" style="background-color: #bfefff;">新番丁</div>
+                <img src="assets/facility_shinbancho.png" alt="新番丁" class="selection-image">
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/tablet-selection.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>勤怠システム - 勤怠一覧</title>
+    <meta name="description" content="勤怠管理システム - 月次勤怠一覧画面">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="attendance-page">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <img src="assets/logo.svg" alt="Logo" class="logo">
+                <div class="nav-menu-wrapper">
+                    <span class="grid-icon" onclick="toggleNavMenu()">⠿</span>
+                    <div class="nav-popover" id="navPopover">
+                        <span class="nav-popover-close" onclick="closeNavMenu()">✕</span>
+                        <button class="btn btn-display" onclick="goToTop()">トップ</button>
+                    </div>
+                </div>
+                <div class="group-info">
+                    <span>G_表示月</span>
+                </div>
+                <div class="attendance-toolbar">
+                    <div class="month-selector">
+                        <input type="month" id="monthSelector" value="2026-02">
+                    </div>
+                    <button class="btn btn-display" onclick="loadMonthData()">表示</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="employee-info" id="employeeNumber">1000105</span>
+                <span class="user-name" id="headerUserName">test 太郎</span>
+                <button class="btn-logout" onclick="handleLogout()">ログアウト</button>
+            </div>
+        </header>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <!-- 勤務日数 -->
+            <div class="summary-box">
+                <div class="summary-title">勤務日数</div>
+                <div class="summary-content">
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="item-label">出勤日数</span>
+                            <span class="item-value" id="sumWorkDays">3</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">欠勤日数</span>
+                            <span class="item-value" id="sumAbsentDays">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">遅刻早退回数</span>
+                            <span class="item-value" id="sumLateDays">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">休日出勤日数</span>
+                            <span class="item-value" id="sumHolidayWorkDays">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">欠勤日数</span>
+                            <span class="item-value" id="sumAbsentDays2">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">有給取得回数</span>
+                            <span class="item-value" id="sumPaidLeaveDays">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">休日日数</span>
+                            <span class="item-value" id="sumHolidays">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">特別休暇取得日数</span>
+                            <span class="item-value" id="sumSpecialLeaveDays">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 勤務時間 -->
+            <div class="summary-box">
+                <div class="summary-title">勤務時間</div>
+                <div class="summary-content">
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="item-label">勤務時間</span>
+                            <span class="item-value" id="sumWorkHours">00:00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">実労働時間</span>
+                            <span class="item-value" id="sumActualHours">00:00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">所定外勤務時間</span>
+                            <span class="item-value" id="sumOvertimeHours">00:00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">申請済残業時間</span>
+                            <span class="item-value" id="sumApprovedOvertime"></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">深夜勤務時間</span>
+                            <span class="item-value" id="sumNightHours">07:00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">週超_元年時間</span>
+                            <span class="item-value" id="sumWeeklyOvertime"></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="item-label">休日勤務時間</span>
+                            <span class="item-value" id="sumHolidayWorkHours">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance Table -->
+        <div class="attendance-table-wrapper">
+            <table class="attendance-table" id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th>日付</th>
+                        <th>スケジュール</th>
+                        <th>業務</th>
+                        <th>休日/休暇</th>
+                        <th>打刻グループ</th>
+                        <th>勤務時間</th>
+                        <th>残業時間</th>
+                        <th>日次_元年時間</th>
+                        <th>出勤コメント</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="attendanceBody">
+                    <!-- JSで動的に生成 -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 編集モーダル -->
+        <div class="modal-overlay" id="modalEdit">
+            <div class="modal">
+                <div class="modal-title">勤怠編集</div>
+                <div class="form-group">
+                    <label>日付</label>
+                    <input type="text" class="form-input" id="editDate" readonly>
+                </div>
+                <div class="form-group">
+                    <label>出勤時刻</label>
+                    <input type="time" class="form-input" id="editClockIn">
+                </div>
+                <div class="form-group">
+                    <label>退勤時刻</label>
+                    <input type="time" class="form-input" id="editClockOut">
+                </div>
+                <div class="form-group">
+                    <label>業務</label>
+                    <input type="text" class="form-input" id="editTask">
+                </div>
+                <div class="form-group">
+                    <label>コメント</label>
+                    <textarea class="form-input" id="editComment" rows="2"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-cancel" onclick="closeEditModal()">キャンセル</button>
+                    <button class="btn btn-submit" onclick="saveEdit()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="js/app.js"></script>
+    <script src="js/attendance.js"></script>
+</body>
+
+</html>
