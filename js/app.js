@@ -8,7 +8,7 @@
 // ==========================
 const CONFIG = {
   // アクセス元のホスト名（localhostやIPアドレス）に合わせてAPIサーバーのURLを設定
-  API_BASE_URL: `http://${window.location.hostname}:5163/api`,
+  API_BASE_URL: `https://sanukiworks-api-dggpfpgqdjfaf5ep.japanwest-01.azurewebsites.net/api`,
   USE_MOCK: false,
 };
 

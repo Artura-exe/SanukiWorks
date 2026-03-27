@@ -215,7 +215,7 @@
             const countEl = document.querySelector('.record-count');
             
             try {
-                const response = await fetch('http://localhost:5163/api/Employee/search', {
+                const response = await fetch(`${CONFIG.API_BASE_URL}/Employee/search`, {
                     headers: { 'Authorization': `Bearer ${sessionStorage.getItem('jwt_token')}` }
                 });
                 const employees = await response.json();
