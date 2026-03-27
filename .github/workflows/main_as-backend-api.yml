@@ -21,7 +21,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.x'
+          dotnet-version: '8.0.x'  # ここを 8.0.x に修正しました
 
       - name: Build with dotnet
         run: dotnet build backend/KintaiApi/KintaiApi.csproj --configuration Release
@@ -62,4 +62,3 @@ jobs:
           app-name: 'as-backend-api'
           slot-name: 'Production'
           package: .
-          
