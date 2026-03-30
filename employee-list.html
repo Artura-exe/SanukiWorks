@@ -237,7 +237,7 @@
                         <td>${emp.氏名_姓 || ''}</td>
                         <td>${emp.氏名_名 || ''}</td>
                         <td>${hireDate}</td>
-                        <td><span class="status-badge" style="background-color: ${emp.在籍区分 === '在籍' ? '#4cae4c' : '#f44336'}">${emp.在籍区分 || ''}</span></td>
+                        <td><span class="status-badge" style="background-color: ${emp.在籍区分名称 === '在職' ? '#4cae4c' : '#f44336'}">${emp.在籍区分名称 || ''}</span></td>
                         <td>${emp.郵便番号 || ''}</td>
                         <td>${emp.住所 || ''}</td>
                     `;

@@ -7,8 +7,10 @@
 // 設定
 // ==========================
 const CONFIG = {
-  // アクセス元のホスト名（localhostやIPアドレス）に合わせてAPIサーバーのURLを設定
-  API_BASE_URL: `https://sanukiworks-api-dggpfpgqdjfaf5ep.japanwest-01.azurewebsites.net/api`,
+  // 開発環境(localhost/IP)と本番環境(Azure)を自動判別
+  API_BASE_URL: (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.startsWith('192.168.') || !window.location.hostname)
+    ? 'http://localhost:5001/api' // まずは確実に繋がる localhost でテスト
+    : 'https://sanukiworks-api-dggpfpgqdjfaf5ep.japanwest-01.azurewebsites.net/api', // 本番運用時はこちら
   USE_MOCK: false,
 };
 
